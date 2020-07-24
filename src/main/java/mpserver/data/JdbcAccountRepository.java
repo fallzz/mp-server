@@ -1,23 +1,19 @@
 package mpserver.data;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.Date;
-import java.util.Map;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.springframework.stereotype.Repository;
 
 import mpserver.domain.Account;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
+
 @Repository
 public class JdbcAccountRepository implements AccountRepository {
-
     private SimpleJdbcInsert accountInserter;
     private ObjectMapper objectMapper;
 
@@ -32,24 +28,6 @@ public class JdbcAccountRepository implements AccountRepository {
     }
 
     @Override
-    public Account findById(String id) {
-        return jdbc.queryForObject(
-                "select id, phone_number, name, password where id=?",
-                this::mapRowToAccount,
-                id
-        );
-    }
-
-    private Account mapRowToAccount(ResultSet rs, int rowNum) throws SQLException {
-        return new Account(
-                rs.getString("id"),
-                rs.getString("phone_number"),
-                rs.getString("person_name"),
-                rs.getString("password")
-        );
-    }
-
-    @Override
     public Account save(Account account) {
         saveAccountDetails(account);
         return account;
@@ -58,5 +36,23 @@ public class JdbcAccountRepository implements AccountRepository {
     private void saveAccountDetails(Account account) {
         Map<String, Object> values = objectMapper.convertValue(account, Map.class);
         accountInserter.execute(values);
+    }
+
+    @Override
+    public Account findById(String id) {
+        return jdbc.queryForObject(
+                "select id, username from Account where id=?",
+                this::mapRowToAccount,
+                id
+        );
+    }
+
+    private Account mapRowToAccount(ResultSet rs, int rowNum) throws SQLException {
+        return new Account(
+                rs.getString("id"),
+                rs.getString("username"),
+                rs.getString("password"),
+                rs.getString("phone_number")
+        );
     }
 }

@@ -1,8 +1,8 @@
-create table if not exists Account (
-    id varchar(20) not null,
-    phone_number varchar(30) not null,
-    password varchar(32) not null,
-    person_name varchar(30) not null
+create table if not exsits Account (
+    id varchar(100) not null primary key,
+    username varchar(100) not null,
+    password varchar(100) not null,
+    phone_number varchar(100) not null
 );
 
 create table if not exists Appointment (
@@ -18,7 +18,7 @@ create table if not exists Appointment (
 );
 
 create table if not exists Account_Appointment (
-    account varchar(20) not null,
+    account varchar(100) not null,
     appointment bigint not null
 );
 
