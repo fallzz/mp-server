@@ -1,6 +1,8 @@
 package mpserver.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -12,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+@Slf4j
 @Repository
 public class JdbcAccountRepository implements AccountRepository {
     private SimpleJdbcInsert accountInserter;
@@ -25,6 +28,7 @@ public class JdbcAccountRepository implements AccountRepository {
         this.accountInserter = new SimpleJdbcInsert(jdbc)
                 .withTableName("Account");
         this.objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
 
     @Override

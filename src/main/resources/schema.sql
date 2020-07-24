@@ -1,7 +1,7 @@
-create table if not exsits Account (
+create table if not exists Account (
     id varchar(100) not null primary key,
     username varchar(100) not null,
-    password varchar(100) not null,
+    password varchar(300) not null,
     phone_number varchar(100) not null
 );
 

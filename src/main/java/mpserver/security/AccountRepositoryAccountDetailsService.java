@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import mpserver.data.AccountRepository;
 import mpserver.domain.Account;
 
-@Service
+@Service(value="AccountRepositoryAccountDetailsService")
 public class AccountRepositoryAccountDetailsService implements UserDetailsService {
     private AccountRepository accountRepo;
 
