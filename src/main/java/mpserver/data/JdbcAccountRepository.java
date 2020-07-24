@@ -45,7 +45,7 @@ public class JdbcAccountRepository implements AccountRepository {
     @Override
     public Account findById(String id) {
         return jdbc.queryForObject(
-                "select id, username from Account where id=?",
+                "select id, username, password, phone_number from Account where id=?",
                 this::mapRowToAccount,
                 id
         );
